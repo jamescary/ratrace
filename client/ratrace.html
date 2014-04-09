@@ -3,11 +3,205 @@
 </head>
 
 <body>
-  {{> hello}}
+{{> page}}
 </body>
 
-<template name="hello">
-  <h1>Hello World!</h1>
-  {{greeting}}
-  <input type="button" value="Click" />
+<template name="page">
+<div id="main">
+    <div id="left">
+        {{> board}}
+    </div>
+    <div id="right">
+        {{> lobby}}
+        {{> voteboard}}
+        {{> postgame}}
+    </div>
+</div>
+</template>
+
+<template name="board">
+    <div id="gameclock">
+        {{ gameclock }}
+    </div>
+
+
+    <div id="board">
+        <div>
+            <div class="square {{ selected 0 }}">{{ square 0 }}</div>
+            <div class="square {{ selected 1 }}">{{ square 1 }}</div>
+            <div class="square {{ selected 2 }}">{{ square 2 }}</div>
+            <div class="square {{ selected 3 }}">{{ square 3 }}</div>
+            <div class="square {{ selected 4 }}">{{ square 4 }}</div>
+            <div class="square {{ selected 5 }}">{{ square 5 }}</div>
+            <div class="square {{ selected 6 }}">{{ square 6 }}</div>
+            <div class="square {{ selected 7 }}">{{ square 7 }}</div>
+            <div class="square {{ selected 8 }}">{{ square 8 }}</div>
+            <div class="square {{ selected 9 }}">{{ square 9 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 10 }}">{{ square 10 }}</div>
+            <div class="square {{ selected 11 }}">{{ square 11 }}</div>
+            <div class="square {{ selected 12 }}">{{ square 12 }}</div>
+            <div class="square {{ selected 13 }}">{{ square 13 }}</div>
+            <div class="square {{ selected 14 }}">{{ square 14 }}</div>
+            <div class="square {{ selected 15 }}">{{ square 15 }}</div>
+            <div class="square {{ selected 16 }}">{{ square 16 }}</div>
+            <div class="square {{ selected 17 }}">{{ square 17 }}</div>
+            <div class="square {{ selected 18 }}">{{ square 18 }}</div>
+            <div class="square {{ selected 19 }}">{{ square 19 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 20 }}">{{ square 20 }}</div>
+            <div class="square {{ selected 21 }}">{{ square 21 }}</div>
+            <div class="square {{ selected 22 }}">{{ square 22 }}</div>
+            <div class="square {{ selected 23 }}">{{ square 23 }}</div>
+            <div class="square {{ selected 24 }}">{{ square 24 }}</div>
+            <div class="square {{ selected 25 }}">{{ square 25 }}</div>
+            <div class="square {{ selected 26 }}">{{ square 26 }}</div>
+            <div class="square {{ selected 27 }}">{{ square 27 }}</div>
+            <div class="square {{ selected 28 }}">{{ square 28 }}</div>
+            <div class="square {{ selected 29 }}">{{ square 29 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 30 }}">{{ square 30 }}</div>
+            <div class="square {{ selected 31 }}">{{ square 31 }}</div>
+            <div class="square {{ selected 32 }}">{{ square 32 }}</div>
+            <div class="square {{ selected 33 }}">{{ square 33 }}</div>
+            <div class="square {{ selected 34 }}">{{ square 34 }}</div>
+            <div class="square {{ selected 35 }}">{{ square 35 }}</div>
+            <div class="square {{ selected 36 }}">{{ square 36 }}</div>
+            <div class="square {{ selected 37 }}">{{ square 37 }}</div>
+            <div class="square {{ selected 38 }}">{{ square 38 }}</div>
+            <div class="square {{ selected 39 }}">{{ square 39 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 40 }}">{{ square 40 }}</div>
+            <div class="square {{ selected 41 }}">{{ square 41 }}</div>
+            <div class="square {{ selected 42 }}">{{ square 42 }}</div>
+            <div class="square {{ selected 43 }}">{{ square 43 }}</div>
+            <div class="square {{ selected 44 }}">{{ square 44 }}</div>
+            <div class="square {{ selected 45 }}">{{ square 45 }}</div>
+            <div class="square {{ selected 46 }}">{{ square 46 }}</div>
+            <div class="square {{ selected 47 }}">{{ square 47 }}</div>
+            <div class="square {{ selected 48 }}">{{ square 48 }}</div>
+            <div class="square {{ selected 49 }}">{{ square 49 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 50 }}">{{ square 50 }}</div>
+            <div class="square {{ selected 51 }}">{{ square 51 }}</div>
+            <div class="square {{ selected 52 }}">{{ square 52 }}</div>
+            <div class="square {{ selected 53 }}">{{ square 53 }}</div>
+            <div class="square {{ selected 54 }}">{{ square 54 }}</div>
+            <div class="square {{ selected 55 }}">{{ square 55 }}</div>
+            <div class="square {{ selected 56 }}">{{ square 56 }}</div>
+            <div class="square {{ selected 57 }}">{{ square 57 }}</div>
+            <div class="square {{ selected 58 }}">{{ square 58 }}</div>
+            <div class="square {{ selected 59 }}">{{ square 59 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 60 }}">{{ square 60 }}</div>
+            <div class="square {{ selected 61 }}">{{ square 61 }}</div>
+            <div class="square {{ selected 62 }}">{{ square 62 }}</div>
+            <div class="square {{ selected 63 }}">{{ square 63 }}</div>
+            <div class="square {{ selected 64 }}">{{ square 64 }}</div>
+            <div class="square {{ selected 65 }}">{{ square 65 }}</div>
+            <div class="square {{ selected 66 }}">{{ square 66 }}</div>
+            <div class="square {{ selected 67 }}">{{ square 67 }}</div>
+            <div class="square {{ selected 68 }}">{{ square 68 }}</div>
+            <div class="square {{ selected 69 }}">{{ square 69 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 70 }}">{{ square 70 }}</div>
+            <div class="square {{ selected 71 }}">{{ square 71 }}</div>
+            <div class="square {{ selected 72 }}">{{ square 72 }}</div>
+            <div class="square {{ selected 73 }}">{{ square 73 }}</div>
+            <div class="square {{ selected 74 }}">{{ square 74 }}</div>
+            <div class="square {{ selected 75 }}">{{ square 75 }}</div>
+            <div class="square {{ selected 76 }}">{{ square 76 }}</div>
+            <div class="square {{ selected 77 }}">{{ square 77 }}</div>
+            <div class="square {{ selected 78 }}">{{ square 78 }}</div>
+            <div class="square {{ selected 79 }}">{{ square 79 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 80 }}">{{ square 80 }}</div>
+            <div class="square {{ selected 81 }}">{{ square 81 }}</div>
+            <div class="square {{ selected 82 }}">{{ square 82 }}</div>
+            <div class="square {{ selected 83 }}">{{ square 83 }}</div>
+            <div class="square {{ selected 84 }}">{{ square 84 }}</div>
+            <div class="square {{ selected 85 }}">{{ square 85 }}</div>
+            <div class="square {{ selected 86 }}">{{ square 86 }}</div>
+            <div class="square {{ selected 87 }}">{{ square 87 }}</div>
+            <div class="square {{ selected 88 }}">{{ square 88 }}</div>
+            <div class="square {{ selected 89 }}">{{ square 89 }}</div>
+        </div>
+        <div>
+            <div class="square {{ selected 90 }}">{{ square 90 }}</div>
+            <div class="square {{ selected 91 }}">{{ square 91 }}</div>
+            <div class="square {{ selected 92 }}">{{ square 92 }}</div>
+            <div class="square {{ selected 93 }}">{{ square 93 }}</div>
+            <div class="square {{ selected 94 }}">{{ square 94 }}</div>
+            <div class="square {{ selected 95 }}">{{ square 95 }}</div>
+            <div class="square {{ selected 96 }}">{{ square 96 }}</div>
+            <div class="square {{ selected 97 }}">{{ square 97 }}</div>
+            <div class="square {{ selected 98 }}">{{ square 98 }}</div>
+            <div class="square {{ selected 99 }}">{{ square 99 }}</div>
+        </div>
+    </div>
+
+<template name="lobby">
+    <div>
+        {{#if show }}
+        <div id="lobby">
+            <h1>What's your name?</h1>
+            <input id="myname" type="text" />
+            {{#if count}}
+            <h1>{{count}} other players are in the lobby:</h1>
+            {{#each waiting }}
+            <div class="player">{{name}}</div>
+            {{/each}}
+            {{/if}}
+            <div>
+                <button id="startgame" class="startgame" {{{disabled}}}>
+                    {{#if count}} It's on! {{else}} Play solo {{/if}}
+                </button>
+            </div>
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="postgame">
+    <div>
+        {{#if show}}
+        <div id="postgame">
+            <button name="backtolobby" class="lobby">Back to lobby</button>
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="scores">
+    <div>
+        {{#if show}}
+        <div id="scores">
+            {{#each players}}
+            {{> player }}
+            {{/each}}
+        </div>
+        {{/if}}
+    </div>
+</template>
+
+<template name="voteboard">
+    <div id="voteclock">
+        {{ voteclock }}
+    </div>
+    {{#each votes}}
+    <div id="vote_{{_id}}" class="vote {{state}}">
+        <span class="count">
+            {{count}}
+        </span>
+        {{direction}}
+    </div>
+    {{/each}}
 </template>

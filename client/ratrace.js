@@ -142,9 +142,17 @@ Template.postgame.events({
 //
 
 Meteor.startup(function () {
+    // Allocate a new player id
+    //
+    // XXX this does not handle hot reload. in the reload case,
+    // Session.get('player_id') will return a real id. we should check for
+    // a pre-existing player, and if it exists, make sure the server still
+    // knows about us.
     var player_id = Players.insert({name: '', idle: false});
     Session.set('player_id', player_id);
 
+    // subscribe to all the players, the game i'm in, and all
+    // the votes in that game.
     Deps.autorun(function () {
         Meteor.subscribe('players');
 
@@ -157,6 +165,11 @@ Meteor.startup(function () {
         }
     });
 
+    // send keepalives so the server can tell when we go away.
+    //
+    // XXX this is not a great idiom. meteor server does not yet have a
+    // way to expose connection status to user code. Once it does, this
+    // code can go away.
     Meteor.setInterval(function() {
         if (Meteor.status().connected)
             Meteor.call('keepalive', Session.get('player_id'));
