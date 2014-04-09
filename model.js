@@ -4,6 +4,9 @@ Games = new Meteor.Collection('games');
 
 Players = new Meteor.Collection('players');
 
+Votes = new Meteor.Collection('votes');
+// { timer: 5, votes: [{direction, count, [player_id]}]}
+
 var SIZE = 10;
 
 if (Meteor.isClient) {

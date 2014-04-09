@@ -18,7 +18,7 @@ Meteor.methods({
 
         // wind down the game clock
         var clock = 120;
-        var interval = Meteor.setInterval((function () {
+        var interval = Meteor.setInterval(function () {
             clock -= 1;
             Games.update(game_id, {$set: {clock: clock}});
 
@@ -26,9 +26,29 @@ Meteor.methods({
             if (clock === 0) {
                 // stop the clock
                 Meteor.clearInterval(interval);
-                // show list of winners or losers
+                // some logic here if win condition is met
+                // update game with set of all non-idle players
+                // as 'winners'?
 
             }
-        })
+        }, 1000);
+
+        return game_id;
+    },
+
+    keepalive: function (player_id) {
+        check(player_id, String);
+        Players.update({_id: player_id},
+                       {$set: {last_keepalive: (new Date()).getTime(),
+                        idle: false}});
     }
-})
+});
+
+Meteor.setInterval(function () {
+    var now = (new Date()).getTime();
+    var idle_threshold = now - 70*1000; // 70 sec
+    var remove_threshold = now - 60*60*1000; // 1hr
+
+    Players.update({last_keepalive: {$lt: idle_threshold}},
+                   {$set: {idle: true}});
+}, 30*1000);
