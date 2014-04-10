@@ -1,1 +1,139 @@
 /* CSS declarations go here */
+body {
+    margin: 0px;
+    background-color: #f4f4f4;
+    font-family: Helvetica, Arial, sans-serif;
+}
+
+/* base styles */
+
+input {
+    height: 50px;
+    width: 300px;
+    font-size: 2em;
+    border: 2px solid black;
+    padding: 5px;
+}
+
+button {
+    position: relative;
+    bottom: 3px;
+    margin: 10px;
+    height: 50px;
+    background-color: #E6EFC2;
+    border: 1px solid #dedede;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.5em;
+}
+
+button:hover {
+    background-color: #D6DFB2;
+    border: 1px solid #C6D880;
+}
+
+button:active {
+    background-color: #529214;
+    border: 1px solid #529214;
+    colofr: #fff;
+}
+
+/************/
+
+#main {
+    margin: 20px;
+}
+
+#left {
+    float: left;
+    width: 40%;
+}
+
+#right {
+    float: left;
+    width: 50%;
+}
+
+#clock {
+    width: 100%;
+    height: 100px;
+    text-align: center;
+    font-size: 3em;
+}
+
+#board {
+    margin: auto;
+    border: 2px solid #999;
+    border-radius: 4px;
+    -moz-border-radius: 4px;
+    padding: 1px;
+
+    width: 400px;
+    height: 400px;
+    background-color: #999;
+}
+
+.square {
+    cursor: pointer;
+    width: 38px;
+    height: 38px;
+    border: 1px solid #eeeee8;
+    border-radius: 0px;
+    -moz-border-radius: 0px;
+    margin: 0px;
+    float: left;
+    text-align: center;
+    background-color: #eeeee8;
+    font-size: 32px;
+}
+
+.square.highlighted {
+
+}
+
+#login {
+    margin: 100px auto;
+    text-align: center;
+}
+
+#login.error {
+    color: red;
+}
+
+#lobby {
+    margin: 100px auto;
+    text-align: center;
+}
+
+#postgame {
+    height: 100px;
+    text-align: center
+}
+
+#voteboard {
+    float: left;
+    width: 100%;
+    background-color: #eeeee8;
+    border: 1px solid black;
+    padding: 0.5em;
+}
+
+#voteboard .voteclock {
+    width: 90%
+    height: 80px;
+    text-align: center;
+    font-size: 3em;
+    color: red;
+}
+
+#voteboard .vote {
+    float: left;
+    font-size: 2em;
+    padding: 0.25em;
+    margin: 0.5em;
+    border: 1px solid #030;
+}
+
+#voteboard .vote span.count {
+    width: 2em;
+}

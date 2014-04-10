@@ -24,7 +24,6 @@
         {{ gameclock }}
     </div>
 
-
     <div id="board">
         <div>
             <div class="square {{ selected 0 }}">{{ square 0 }}</div>
@@ -147,6 +146,7 @@
             <div class="square {{ selected 99 }}">{{ square 99 }}</div>
         </div>
     </div>
+</template>
 
 <template name="lobby">
     <div>
@@ -161,7 +161,7 @@
             {{/each}}
             {{/if}}
             <div>
-                <button id="startgame" class="startgame" {{{disabled}}}>
+                <button id="startgame" class="startgame" {{disabled}} >
                     {{#if count}} It's on! {{else}} Play solo {{/if}}
                 </button>
             </div>
@@ -196,8 +196,14 @@
     <div id="voteclock">
         {{ voteclock }}
     </div>
+    <div id="votebuttons">
+        <button name="left" class="votebutton" id="voteleft">leftvote</button>
+        <button name="down" class="votebutton" id="votedown">downvote</button>
+        <button name="up" class="votebutton" id="voteup">upvote</button>
+        <button name="right" class="votebutton" id="voteright">rightvote</button>
+    </div>
     {{#each votes}}
-    <div id="vote_{{_id}}" class="vote {{state}}">
+    <div id="vote_{{_id}}">
         <span class="count">
             {{count}}
         </span>
