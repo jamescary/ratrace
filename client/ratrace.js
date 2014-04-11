@@ -180,7 +180,6 @@ Template.voteboard.events({
     'click button#votedown.votebutton': function (evt) {
         console.log(evt);
         vote('down');
-        Meteor.call('move', 'down');
     },
 
     'click button#voteup.votebutton': function (evt) {
@@ -191,7 +190,6 @@ Template.voteboard.events({
     'click button#voteright.votebutton': function (evt) {
         console.log(evt);
         vote('right');
-        Meteor.call('move', 'right');
     },
 
     'keydown .vote': function (evt) {
@@ -238,6 +236,7 @@ Meteor.methods({
             return;
         }
         var board = game().board;
+        var me = player();
         var mouseLoc = board.indexOf('M');
         var cheeseLoc = board.indexOf('C');
 
@@ -266,10 +265,9 @@ Meteor.methods({
             }
         }
 
-        console.log("board: "+board);
+        Games.update(me.game_id, {$set: {board: board}});
 
-        Games.update(game()._id, {$set: {board: board}});
-
+        console.log("board: "+game().board);
     }
 });
 
