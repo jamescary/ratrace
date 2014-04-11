@@ -3,6 +3,7 @@ body {
     margin: 0px;
     background-color: #f4f4f4;
     font-family: Helvetica, Arial, sans-serif;
+    text-select: none;
 }
 
 /* base styles */
@@ -74,7 +75,6 @@ button:active {
 }
 
 .square {
-    cursor: pointer;
     width: 38px;
     height: 38px;
     border: 1px solid #eeeee8;

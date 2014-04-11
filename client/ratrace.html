@@ -193,21 +193,25 @@
 </template>
 
 <template name="voteboard">
-    <div id="voteclock">
-        {{ voteclock }}
+    <div>
+        {{#if show}}
+            <div id="voteclock">
+                {{ voteclock }}
+            </div>
+            <div id="votebuttons">
+                <button name="left" class="votebutton" id="voteleft">leftvote</button>
+                <button name="down" class="votebutton" id="votedown">downvote</button>
+                <button name="up" class="votebutton" id="voteup">upvote</button>
+                <button name="right" class="votebutton" id="voteright">rightvote</button>
+            </div>
+            {{#each votes}}
+                <div id="vote_{{_id}}">
+                    <span class="count">
+                        {{count}}
+                    </span>
+                    {{direction}}
+                </div>
+            {{/each}}
+        {{/if}}
     </div>
-    <div id="votebuttons">
-        <button name="left" class="votebutton" id="voteleft">leftvote</button>
-        <button name="down" class="votebutton" id="votedown">downvote</button>
-        <button name="up" class="votebutton" id="voteup">upvote</button>
-        <button name="right" class="votebutton" id="voteright">rightvote</button>
-    </div>
-    {{#each votes}}
-    <div id="vote_{{_id}}">
-        <span class="count">
-            {{count}}
-        </span>
-        {{direction}}
-    </div>
-    {{/each}}
 </template>
