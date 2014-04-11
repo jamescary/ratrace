@@ -11,7 +11,6 @@ var resetVotes = function (game_id) {
 };
 
 var maxDir = function (game_id) {
-    console.log("maxDir gameid: "+game_id);
     var voteDirs = ['left', 'down', 'up', 'right'];
     var max = 0;
     var maxDir = '';
@@ -31,65 +30,67 @@ var maxDir = function (game_id) {
 };
 
 var move = function (game_id, direction) {
-    console.log(game_id+" "+direction);
     var game = Games.findOne(game_id);
     var board = game.board;
     var mouseLoc = board.indexOf('M');
     var cheeseLoc = board.indexOf('C');
 
-    var winboard = ['T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E',
-                    'T','H','E',',',',',',','G','A','M','E'];
+
+    var winboard = [' ',' ',' ','Y','O','U',' ',' ',' ',' ',
+                    ' ',' ',' ','W','I','N',' ',' ',' ',' ',
+                    'T','H','E',' ',' ',' ','G','A','M','E',
+                    'T','H','E',' ',' ',' ','G','A','M','E',
+                    ' ',' ',' ','Y','O','U',' ',' ',' ',' ',
+                    ' ',' ',' ','W','I','N',' ',' ',' ',' ',
+                    'T','H','E',' ',' ',' ','G','A','M','E',
+                    'T','H','E',' ',' ',' ','G','A','M','E',
+                    ' ',' ',' ','Y','O','U',' ',' ',' ',' ',
+                    ' ',' ',' ','W','I','N',' ',' ',' ',' '];
 
 
     if (direction == 'left') {
         if (ADJACENCIES[mouseLoc].indexOf(mouseLoc - 1) != -1) {
-            if (board[mouseLoc - 1] == '.' || board[mouseLoc - 1] == 'C') {
+            if (board[mouseLoc - 1] == ' ' || board[mouseLoc - 1] == 'C') {
                 board[mouseLoc - 1] = 'M';
-                board[mouseLoc] = '.';
+                board[mouseLoc] = ' ';
                 if (mouseLoc - 1 == cheeseLoc) {
-                    Games.update(game_id, {$set: {board: winboard}});
+                    Games.update(game_id, {$set: {board: winboard, win: true}});
                        return;
              }
             };
         }
+
     } else if (direction == 'right') {
         if (ADJACENCIES[mouseLoc].indexOf(mouseLoc + 1) != -1) {
-            if (board[mouseLoc + 1] == '.' || board[mouseLoc + 1] == 'C') {
+            if (board[mouseLoc + 1] == ' ' || board[mouseLoc + 1] == 'C') {
                 board[mouseLoc + 1] = 'M';
-                board[mouseLoc] = '.';
+                board[mouseLoc] = ' ';
                 if (mouseLoc + 1 == cheeseLoc) {
-                    Games.update(game_id, {$set: {board: winboard}});
+                    Games.update(game_id, {$set: {board: winboard, win: true}});
                       return;
               }
             }
         }
+
     } else if (direction == 'down') {
         if (ADJACENCIES[mouseLoc].indexOf(mouseLoc + 10) != -1) {
-            if (board[mouseLoc + 10] == '.' || board[mouseLoc + 10 == 'C']) {
+            if (board[mouseLoc + 10] == ' ' || board[mouseLoc + 10 == 'C']) {
                 board[mouseLoc + 10] = 'M';
-                board[mouseLoc] = '.';
+                board[mouseLoc] = ' ';
                 if (mouseLoc + 10 == cheeseLoc) {
-                    Games.update(game_id, {$set: {board: winboard}});
+                    Games.update(game_id, {$set: {board: winboard, win: true}});
                      return;
                }
             }
         }
+
     } else if (direction == 'up') {
         if (ADJACENCIES[mouseLoc].indexOf(mouseLoc - 10) != -1) {
-            if (board[mouseLoc - 10] == '.' || board[mouseLoc - 10] == 'C') {
+            if (board[mouseLoc - 10] == ' ' || board[mouseLoc - 10] == 'C') {
                 board[mouseLoc - 10] = 'M';
-                board[mouseLoc] = '.';
+                board[mouseLoc] = ' ';
                 if (mouseLoc - 10 == cheeseLoc) {
-                    Games.update(game_id, {$set: {board: winboard}});
+                    Games.update(game_id, {$set: {board: winboard, win: true}});
                     return;
                 }
             }
@@ -118,23 +119,27 @@ Meteor.methods({
         resetVotes(game_id);
 
         // wind down the vote clock
-        var voteclock = 3;
+        var voteclock = 4;
         var interval = Meteor.setInterval(function () {
             voteclock -= 1;
             Games.update(game_id, {$set: {voteclock: voteclock}});
 
             // end of voting period
             if (voteclock == 0) {
-                // console.log("calling meteor method move('right')");
-                // Meteor.call('move', 'right');
 
                 var direction = maxDir(game_id);
-                console.log("Attempting to move: "+direction);
                 move(game_id, direction);
 
                 resetVotes(game_id);
 
-                voteclock = 3;
+                var game = Games.findOne(game_id);
+                if(game.win) {
+                    Meteor.clearInterval(interval);
+                    // the game has been won, stop the votes!
+                    return;
+                }
+
+                voteclock = 4;
 
             }
         }, 1000);

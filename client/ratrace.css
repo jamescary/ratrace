@@ -87,8 +87,20 @@ button:active {
     font-size: 32px;
 }
 
-.square.highlighted {
+.square.mouse{
+    background-color: #f4a460;
+}
 
+.square.cheese {
+    background-color: #e5e500;
+}
+
+.square.wall {
+    background-color: #333;
+}
+
+.square.passage {
+    color: #ddd;
 }
 
 #login {
@@ -118,7 +130,7 @@ button:active {
     padding: 0.5em;
 }
 
-#voteboard .voteclock {
+#voteclock {
     width: 90%
     height: 80px;
     text-align: center;
@@ -126,7 +138,7 @@ button:active {
     color: red;
 }
 
-#voteboard .vote {
+#vote {
     float: left;
     font-size: 2em;
     padding: 0.25em;
@@ -134,6 +146,12 @@ button:active {
     border: 1px solid #030;
 }
 
-#voteboard .vote span.count {
-    width: 2em;
+#vote span.count {
+    height: 20px;
+    font-size: 1em;
+}
+
+#vote span.direction {
+    height: 20px;
+    font-size: 1em;
 }

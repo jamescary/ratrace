@@ -17,11 +17,9 @@ var vote = function (direction) {
     var me = player();
     var vote = Votes.findOne({game_id: me.game_id,
                               direction: direction});
-    console.log("dir: "+direction);
 
     if (vote) {
         var count = vote.count + 1;
-        console.log("setting dir: "+direction+" to count "+count);
         var result = Votes.update({_id: vote._id}, {$set: {count: count}});
     } else {
         Votes.insert({game_id: me.game_id,
@@ -31,9 +29,46 @@ var vote = function (direction) {
 
     var vote = Votes.findOne({game_id: me.game_id,
                               direction: direction});
-    console.log(vote);
+
+
+    var selectedInterval = Session.get('selectedInterval');
+    if (!selectedInterval) {
+        Session.set('selectedInterval', 'true');
+    } else {
+        var interval = Meteor.setInterval(function() {
+            set_selected_positions();
+            if (game().win) {
+                Meteor.clearInterval(interval);
+                return;
+            }
+        }, 500);
+    }
 
     return;
+};
+
+var set_selected_positions = function () {
+    var board = game().board;
+
+    clear_selected_positions();
+
+    for (var i = 0; i < 100; i++) {
+        if (board[i] == 'M') {
+            Session.set('selected_' + i, 'mouse');
+        } else if (board[i] == 'C') {
+            Session.set('selected_' + i, 'cheese');
+        } else if (board[i] == '*') {
+            Session.set('selected_' + i, 'wall');
+        } else {
+            Session.set('selected_' + i, 'passage');
+        }
+    }
+};
+
+var clear_selected_positions = function () {
+    for (var i = 0; i < 100; i++) {
+        Session.set('selected_' + i, false);
+    }
 };
 
 //
@@ -73,6 +108,11 @@ Template.lobby.events({
     },
     'click button.startgame': function () {
         Meteor.call('start_new_game');
+        var interval = Meteor.setInterval(function() {
+            if (game().win)
+                Meteor.clearInterval(interval);
+            set_selected_positions();
+        }, 100);
     }
 });
 
@@ -93,39 +133,12 @@ var SPLASH = ['M','','','','','','','','','',
 
 Template.board.square = function (i) {
     var g = game();
-    return g && g.board && g.board[i] || SPLASH[i];
+    return g && g.board && ' ' || SPLASH[i];
 };
 
-// Template.board.clock = function () {
-//     if (!game()) {
-//         console.log("Couldn't find game.");
-//         return '0:00';
-//     }
-//     var clock = game() && game().gameclock;
-//
-//     if (!clock || clock === 0)
-//         return;
-//
-//     // format into M:SS
-//     var min = Math.floor(clock / 60);
-//     var sec = clock % 60;
-//     return min + ':' + (sec < 10 ? ('0' + sec) : sec);
-// };
-
-Template.board.events({
-//    var me = player();
-//
-//    'keydown .vote': function (evt) {
-//        if (evt.keyCode == 37)
-//            vote('left', me);
-//        if (evt.keyCode == 38)
-//            vote('up', me);
-//        if (evt.keyCode == 39)
-//            vote('right', me);
-//        if (evt.keyCode == 40)
-//            vote('down', me);
-// }
-});
+Template.board.selected = function(i) {
+    return Session.get('selected_' + i);
+};
 
 //
 // voting board
@@ -135,35 +148,31 @@ Template.voteboard.events({
     // var me = player();
 
     'click button#voteleft.votebutton': function (evt) {
-        console.log(evt);
         vote('left');
     },
 
     'click button#votedown.votebutton': function (evt) {
-        console.log(evt);
         vote('down');
     },
 
     'click button#voteup.votebutton': function (evt) {
-        console.log(evt);
         vote('up');
     },
 
     'click button#voteright.votebutton': function (evt) {
-        console.log(evt);
         vote('right');
     },
 
-    'keydown .vote': function (evt) {
-        if (evt.keyCode == 37)
-            vote('left');
-        if (evt.keyCode == 38)
-            vote('up');
-        if (evt.keyCode == 39)
-            vote('right');
-        if (evt.keyCode == 40)
-            vote('down');
-    }
+    // 'keydown .vote': function (evt) {
+    //     if (evt.keyCode == 37)
+    //         vote('left');
+    //     if (evt.keyCode == 38)
+    //         vote('up');
+    //     if (evt.keyCode == 39)
+    //         vote('right');
+    //     if (evt.keyCode == 40)
+    //         vote('down');
+    // }
 });
 
 Template.voteboard.show = function() {
@@ -186,7 +195,7 @@ Template.postgame.show = function () {
     if (!game()) {
         return false;
     }
-    return game() & game().voteclock === 0;
+    return game() && game().win;
 };
 
 Template.postgame.events({

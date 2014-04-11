@@ -174,19 +174,8 @@
     <div>
         {{#if show}}
         <div id="postgame">
+            <h2>You win the game!</h2>
             <button name="backtolobby" class="lobby">Back to lobby</button>
-        </div>
-        {{/if}}
-    </div>
-</template>
-
-<template name="scores">
-    <div>
-        {{#if show}}
-        <div id="scores">
-            {{#each players}}
-            {{> player }}
-            {{/each}}
         </div>
         {{/if}}
     </div>
@@ -206,10 +195,12 @@
             </div>
             {{#each votes}}
                 <div id="vote_{{_id}}">
-                    <span class="count">
+                    <span id="vote" class="count">
                         {{count}}
                     </span>
-                    {{direction}}
+                    <span id="vote" class="direction">
+                        {{direction}}
+                    </span>
                 </div>
             {{/each}}
         {{/if}}
